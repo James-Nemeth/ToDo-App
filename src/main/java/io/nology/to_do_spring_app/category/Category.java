@@ -2,6 +2,8 @@ package io.nology.to_do_spring_app.category;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.nology.to_do_spring_app.todo.Todo;
 
 import jakarta.persistence.CascadeType;
@@ -25,6 +27,7 @@ public class Category {
     private String name;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Todo> todos;
 
     public Category() {

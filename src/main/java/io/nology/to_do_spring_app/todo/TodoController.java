@@ -17,30 +17,37 @@ public class TodoController {
 
     @GetMapping
     public ResponseEntity<List<Todo>> getAllTodos(@RequestParam(required = false) Long category) {
-        List<Todo> todos;
-        if (category != null) {
-            todos = service.getTodosByCategory(category);
-        } else {
-            todos = service.getAllTodos();
-        }
+        List<Todo> todos = (category != null) ? service.getTodosByCategory(category) : service.getAllTodos();
         return ResponseEntity.ok(todos);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Todo> getTodoById(@PathVariable Long id) {
+        Todo todo = service.getTodoById(id);
+        return todo != null ? ResponseEntity.ok(todo) : ResponseEntity.notFound().build();
+    }
+
+
     @PostMapping
-    public ResponseEntity<Todo> createTodo(@RequestBody CreateTodoDTO data) {
-        return ResponseEntity.ok(service.createTodo(data));
+    public ResponseEntity<?> createTodo(@RequestBody CreateTodoDTO data) {
+        try {
+            Todo createdTodo = service.createTodo(data);
+            return ResponseEntity.ok(createdTodo);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage()); // 400 Bad Request if category not found
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Todo> updateTodo(@PathVariable Long id, @RequestBody CreateTodoDTO data) {
+    public ResponseEntity<?> updateTodo(@PathVariable Long id, @RequestBody CreateTodoDTO data) {
         Todo updatedTodo = service.updateTodo(id, data);
-        return updatedTodo != null ? ResponseEntity.ok(updatedTodo) : ResponseEntity.notFound().build();
+        return (updatedTodo != null) ? ResponseEntity.ok(updatedTodo) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Todo> archiveTodo(@PathVariable Long id) {
+    public ResponseEntity<?> archiveTodo(@PathVariable Long id) {
         Todo archivedTodo = service.archiveTodo(id);
-        return archivedTodo != null ? ResponseEntity.ok(archivedTodo) : ResponseEntity.notFound().build();
+        return (archivedTodo != null) ? ResponseEntity.ok(archivedTodo) : ResponseEntity.notFound().build();
     }
 
 }

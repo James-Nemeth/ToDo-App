@@ -19,18 +19,21 @@ public class TodoService {
     }
 
     public List<Todo> getAllTodos() {
-        return repo.findAll();
+        return repo.findByIsArchivedFalse();
     }
 
     public List<Todo> getTodosByCategory(Long categoryId) {
         return repo.findByCategoryId(categoryId);
     }
 
+    public Todo getTodoById(Long id) {
+        return repo.findById(id).orElse(null);
+    }
+
     public Todo createTodo(CreateTodoDTO data) {
-        Category category = categoryRepo.findById(data.getCategoryId()).orElse(null);
-        if (category == null) {
-            return null;
-        }
+        Category category = categoryRepo.findById(data.getCategoryId())
+                .orElseThrow(() -> new IllegalArgumentException("Category not found"));
+
         Todo newTodo = new Todo(data.getTask(), data.getCompleted(), category);
         return repo.save(newTodo);
     }

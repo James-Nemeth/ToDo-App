@@ -5,4 +5,6 @@ import java.util.List;
 
 public interface TodoRepository extends JpaRepository<Todo, Long> {
     List<Todo> findByCategoryId(Long categoryId);
+    List<Todo> findByIsArchivedFalse();
+
 }

@@ -1,6 +1,7 @@
 package io.nology.to_do_spring_app.todo;
 
 import jakarta.persistence.*;
+
 import io.nology.to_do_spring_app.category.Category;
 
 @Entity
@@ -21,7 +22,7 @@ public class Todo {
     private Boolean isArchived = false;
 
     @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
+
     private Category category;
 
     public Todo() {
