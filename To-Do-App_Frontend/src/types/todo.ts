@@ -5,7 +5,7 @@ export interface Category {
 
 export interface Todo {
   id: number;
-  title: string;
+  task: string;
   category: Category;
   isArchived: boolean;
 }

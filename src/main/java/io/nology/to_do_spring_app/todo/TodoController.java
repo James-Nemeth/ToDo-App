@@ -27,14 +27,13 @@ public class TodoController {
         return todo != null ? ResponseEntity.ok(todo) : ResponseEntity.notFound().build();
     }
 
-
     @PostMapping
     public ResponseEntity<?> createTodo(@RequestBody CreateTodoDTO data) {
         try {
             Todo createdTodo = service.createTodo(data);
             return ResponseEntity.ok(createdTodo);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage()); // 400 Bad Request if category not found
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
