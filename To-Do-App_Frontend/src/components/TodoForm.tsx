@@ -33,17 +33,22 @@ const TodoForm = ({ onAdd }: { onAdd: () => void }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-4 bg-[#1E1E2F] p-6 border border-gray-600 rounded-lg shadow-md"
+    >
       <input
         type="text"
         placeholder="Add a new Task"
         value={task}
         onChange={(e) => setTask(e.target.value)}
-        className="p-2 border rounded"
+        className="p-3 bg-[#F8F8F8] text-black border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-[#F5A623]"
       />
+
       <select
         value={categoryId ?? ""}
         onChange={(e) => setCategroyId(Number(e.target.value))}
+        className="p-3 bg-[#F8F8F8] text-black border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-[#F5A623]"
       >
         <option value="" disabled>
           Select Category
@@ -54,7 +59,11 @@ const TodoForm = ({ onAdd }: { onAdd: () => void }) => {
           </option>
         ))}
       </select>
-      <button type="submit" className="bg-blue-500 tyext-white p-2 rounded">
+
+      <button
+        type="submit"
+        className="bg-[#F5A623] text-[#1E1E2F] font-bold p-3 rounded-lg shadow-md hover:bg-[#E5941C] transition-all"
+      >
         Add Task
       </button>
     </form>

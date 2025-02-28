@@ -3,10 +3,18 @@ import TodoList from "../components/TodoList";
 
 const Home = () => {
   return (
-    <div className="max-w-xl mx-auto mt-10 p-5 border rounded shadow-lg">
-      <h1 className="text-2xl font-bold text-center">To-Do List</h1>
-      <TodoForm onAdd={() => window.location.reload()} />
-      <TodoList />
+    <div className="max-w-5xl mx-auto mt-10 p-6 bg-[#1E1E2F] border border-gray-600 rounded-lg shadow-lg">
+      <h1 className="text-3xl font-bold text-center text-[#F5A623]">
+        To-Do List
+      </h1>
+
+      <div className="mt-5">
+        <TodoForm onAdd={() => window.location.reload()} />
+      </div>
+
+      <div className="mt-5">
+        <TodoList />
+      </div>
     </div>
   );
 };
