@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Category } from "../types/todo";
 import { getCategories } from "../api/api";
+import CategorySelect from "./CategorySelect";
 
 const TodoForm = ({ onAdd }: { onAdd: () => void }) => {
   const [task, setTask] = useState("");
-  const [categoryId, setCategroyId] = useState<number | null>(null);
+  const [categoryId, setCategoryId] = useState<number | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
@@ -28,42 +29,30 @@ const TodoForm = ({ onAdd }: { onAdd: () => void }) => {
     });
 
     setTask("");
-    setCategroyId(null);
+    setCategoryId(null);
     onAdd();
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="flex flex-col gap-4 bg-[#1E1E2F] p-6 border border-gray-600 rounded-lg shadow-md"
-    >
+    <form onSubmit={handleSubmit} className="flex flex-col gap-3">
       <input
         type="text"
         placeholder="Add a new Task"
         value={task}
         onChange={(e) => setTask(e.target.value)}
-        className="p-3 bg-[#F8F8F8] text-black border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-[#F5A623]"
+        className="p-2 border rounded"
       />
 
-      <select
-        value={categoryId ?? ""}
-        onChange={(e) => setCategroyId(Number(e.target.value))}
-        className="p-3 bg-[#F8F8F8] text-black border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-[#F5A623]"
-      >
-        <option value="" disabled>
-          Select Category
-        </option>
-        {categories.map((category) => (
-          <option key={category.id} value={category.id}>
-            {category.name}
-          </option>
-        ))}
-      </select>
+      <CategorySelect
+        categories={categories}
+        selectedCategory={categoryId}
+        onCategoryChange={setCategoryId}
+        onCategoryAdded={(newCategory) =>
+          setCategories([...categories, newCategory])
+        }
+      />
 
-      <button
-        type="submit"
-        className="bg-[#F5A623] text-[#1E1E2F] font-bold p-3 rounded-lg shadow-md hover:bg-[#E5941C] transition-all"
-      >
+      <button type="submit" className="bg-blue-500 text-white p-2 rounded">
         Add Task
       </button>
     </form>
