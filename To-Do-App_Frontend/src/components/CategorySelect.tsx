@@ -47,9 +47,9 @@ const CategorySelect = ({
       {isModalOpen && (
         <CategoryModal
           onClose={() => setIsModalOpen(false)}
-          onAddCategory={(name) => {
-            const newCategory = { id: Date.now(), name };
+          onCategoryAdded={(newCategory) => {
             onCategoryAdded(newCategory);
+            setIsModalOpen(false);
           }}
         />
       )}

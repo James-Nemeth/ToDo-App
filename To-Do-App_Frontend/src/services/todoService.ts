@@ -1,15 +1,10 @@
 import axios from "axios";
-import { Todo, Category } from "../types/todo";
+import { Todo } from "../types/todo";
 
 const API_URL = "http://localhost:8080";
 
 export const getTodos = async () => {
   const response = await axios.get<Todo[]>(`${API_URL}/todos`);
-  return response.data;
-};
-
-export const getCategories = async () => {
-  const response = await axios.get<Category[]>(`${API_URL}/categories`);
   return response.data;
 };
 

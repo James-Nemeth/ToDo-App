@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Category } from "../types/todo";
-import { getCategories } from "../api/api";
+import { getCategories } from "../services/categoryService";
 import CategorySelect from "./CategorySelect";
 
 const todoSchema = z.object({
