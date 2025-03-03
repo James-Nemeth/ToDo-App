@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/todos")
@@ -37,9 +38,9 @@ public class TodoController {
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateTodo(@PathVariable Long id, @RequestBody CreateTodoDTO data) {
-        Todo updatedTodo = service.updateTodo(id, data);
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updatePartialTodo(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        Todo updatedTodo = service.updatePartialTodo(id, updates);
         return (updatedTodo != null) ? ResponseEntity.ok(updatedTodo) : ResponseEntity.notFound().build();
     }
 

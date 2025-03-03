@@ -1,15 +1,30 @@
 import { Todo } from "../types/todo";
+import { archiveTodo, updateTodo } from "../services/todoService";
 
-const TodoItem = ({ todo, onUpdate }: { todo: Todo; onUpdate: () => void }) => {
-  const makeIsArchive = async () => {
+const TodoItem = ({
+  todo,
+  onUpdate,
+  isCompletedTab,
+}: {
+  todo: Todo;
+  onUpdate: () => void;
+  isCompletedTab: boolean;
+}) => {
+  const setIsArchive = async () => {
     try {
-      await fetch(`http://localhost:8080/todos/${todo.id}`, {
-        method: "DELETE",
-      });
-
+      await archiveTodo(todo.id);
       onUpdate();
     } catch (error) {
       console.error("Error archiving todo:", error);
+    }
+  };
+
+  const setIsComplete = async () => {
+    try {
+      await updateTodo(todo.id, { completed: true });
+      onUpdate();
+    } catch (error) {
+      console.error("Error updating todo:", error);
     }
   };
 
@@ -19,13 +34,28 @@ const TodoItem = ({ todo, onUpdate }: { todo: Todo; onUpdate: () => void }) => {
         <h3 className="text-lg font-semibold text-[#F5A623]">{todo.task}</h3>
         <p className="text-sm text-gray-300">{todo.category.name}</p>
       </div>
-
-      <button
-        onClick={makeIsArchive}
-        className="bg-[#F5A623] hover:bg-[#E5941C] text-[#1E1E2F] font-bold px-4 py-2 rounded-lg transition-all shadow-md"
-      >
-        Delete
-      </button>
+      <div>
+        {isCompletedTab ? (
+          <div className="bg-green-500 text-white font-bold px-4 py-2 rounded-lg flex items-center justify-center w-10 h-10">
+            ✓
+          </div>
+        ) : (
+          <>
+            <button
+              onClick={setIsComplete}
+              className="bg-green-600 hover:bg-green-700 text-white font-bold px-4 py-2 rounded-lg transition-all shadow-md mr-2"
+            >
+              Complete
+            </button>
+            <button
+              onClick={setIsArchive}
+              className="bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2 rounded-lg transition-all shadow-md"
+            >
+              Delete
+            </button>
+          </>
+        )}
+      </div>
     </div>
   );
 };

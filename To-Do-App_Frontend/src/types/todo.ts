@@ -8,4 +8,5 @@ export interface Todo {
   task: string;
   category: Category;
   isArchived: boolean;
+  completed: boolean;
 }

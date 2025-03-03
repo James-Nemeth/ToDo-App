@@ -16,7 +16,7 @@ public class Todo {
     private String task;
 
     @Column
-    private Boolean completed;
+    private Boolean completed = false;
 
     @Column
     private Boolean isArchived = false;
@@ -30,7 +30,7 @@ public class Todo {
 
     public Todo(String task, Boolean completed, Category category) {
         this.task = task;
-        this.completed = completed;
+        this.completed = (completed != null) ? completed : false;
         this.category = category;
     }
 

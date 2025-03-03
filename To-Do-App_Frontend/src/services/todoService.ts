@@ -5,7 +5,7 @@ const API_URL = "http://localhost:8080";
 
 export const getTodos = async () => {
   const response = await axios.get<Todo[]>(`${API_URL}/todos`);
-  return response.data;
+  return response.data.filter((todo) => !todo.isArchived);
 };
 
 export const addTodo = async (todo: Omit<Todo, "id">) => {
@@ -14,10 +14,18 @@ export const addTodo = async (todo: Omit<Todo, "id">) => {
 };
 
 export const updateTodo = async (id: number, updatedTodo: Partial<Todo>) => {
-  const response = await axios.put<Todo>(`${API_URL}/todos/${id}`, updatedTodo);
+  const response = await axios.patch<Todo>(
+    `${API_URL}/todos/${id}`,
+    updatedTodo
+  );
   return response.data;
 };
 
-export const deleteTodo = async (id: number) => {
-  await axios.delete(`${API_URL}/todos/${id}`);
+export const archiveTodo = async (id: number) => {
+  try {
+    await axios.delete(`${API_URL}/todos/${id}`);
+  } catch (error) {
+    console.error("Error deleting todo:", error);
+    throw error;
+  }
 };

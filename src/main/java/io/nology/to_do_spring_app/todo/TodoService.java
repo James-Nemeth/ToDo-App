@@ -6,6 +6,7 @@ import io.nology.to_do_spring_app.category.CategoryRepository;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TodoService {
@@ -38,15 +39,29 @@ public class TodoService {
         return repo.save(newTodo);
     }
 
-    public Todo updateTodo(Long id, CreateTodoDTO data) {
+    public Todo updatePartialTodo(Long id, Map<String, Object> updates) {
         Optional<Todo> optionalTodo = repo.findById(id);
-        if (optionalTodo.isPresent()) {
-            Todo todo = optionalTodo.get();
-            todo.setTask(data.getTask());
-            todo.setCompleted(data.getCompleted());
-            return repo.save(todo);
+        if (optionalTodo.isEmpty()) {
+            return null;
         }
-        return null;
+
+        Todo todo = optionalTodo.get();
+
+        updates.forEach((key, value) -> {
+            switch (key) {
+                case "task":
+                    todo.setTask((String) value);
+                    break;
+                case "completed":
+                    todo.setCompleted((Boolean) value);
+                    break;
+                case "isArchived":
+                    todo.setIsArchived((Boolean) value);
+                    break;
+            }
+        });
+
+        return repo.save(todo);
     }
 
     public Todo archiveTodo(Long id) {
