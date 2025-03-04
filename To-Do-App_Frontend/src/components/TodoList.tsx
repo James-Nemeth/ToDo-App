@@ -3,9 +3,16 @@ import { Todo } from "../types/todo";
 import { getTodos } from "../services/todoService";
 import TodoItem from "./TodoItem";
 
-const TodoList = () => {
+const TodoList = ({
+  categories,
+  fetchCategories,
+}: {
+  categories: string[];
+  fetchCategories: () => void;
+}) => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [activeTab, setActiveTab] = useState<"active" | "completed">("active");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
   const fetchTodos = async () => {
     try {
@@ -18,7 +25,8 @@ const TodoList = () => {
 
   useEffect(() => {
     fetchTodos();
-  }, []);
+    fetchCategories();
+  }, [categories]);
 
   return (
     <div className="mt-5">
@@ -45,9 +53,29 @@ const TodoList = () => {
         </button>
       </div>
 
+      <div className="mb-4">
+        <select
+          className="px-4 py-2 border rounded-lg bg-[#1E1E2F] text-[#F8F8F8] shadow-md"
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+        >
+          <option value="all">All Categories</option>
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+      </div>
+
       {todos
         .filter((todo) =>
           activeTab === "active" ? !todo.completed : todo.completed
+        )
+        .filter(
+          (todo) =>
+            selectedCategory === "all" ||
+            todo.category.name === selectedCategory
         )
         .map((todo) => (
           <TodoItem
