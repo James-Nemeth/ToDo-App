@@ -80,7 +80,10 @@ const TodoForm = ({ onAdd }: { onAdd: () => void }) => {
         <p className="text-red-500 font-bold">{errors.categoryId.message}</p>
       )}
 
-      <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+      <button
+        type="submit"
+        className="bg-blue-500 text-white p-2 rounded font-bold text-xl  hover:bg-blue-600"
+      >
         Add Task
       </button>
     </form>
