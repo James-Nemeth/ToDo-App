@@ -20,21 +20,38 @@ public class TodoService {
     }
 
     public List<Todo> getAllTodos() {
-        return repo.findByIsArchivedFalse();
+        List<Todo> todos = repo.findByIsArchivedFalse();
+
+        if (todos.isEmpty()) {
+            throw new IllegalStateException("No active todos found.");
+        }
+
+        return todos;
     }
 
     public List<Todo> getTodosByCategory(Long categoryId) {
-        return repo.findByCategoryId(categoryId);
+        List<Todo> todos = repo.findByCategoryId(categoryId);
+
+        if (todos.isEmpty()) {
+            throw new IllegalArgumentException("No todos found with that categoryId.");
+        }
+
+        return todos;
     }
 
     public Todo getTodoById(Long id) {
-        return repo.findById(id).orElse(null);
+        return repo.findById(id).orElseThrow(() -> new IllegalStateException("No Todos with this ID found"));
     }
 
     public Todo createTodo(CreateTodoDTO data) {
         Category category = categoryRepo.findById(data.getCategoryId())
                 .orElseThrow(() -> new IllegalArgumentException("Category not found"));
 
+        boolean duplicatedTodo = repo.existsByTaskAndCategoryAndCompletedFalseAndIsArchivedFalse(data.getTask(),
+                category);
+        if (duplicatedTodo) {
+            throw new IllegalArgumentException("A task with that name and category already exists");
+        }
         Todo newTodo = new Todo(data.getTask(), data.getCompleted(), category);
         return repo.save(newTodo);
     }
@@ -60,7 +77,7 @@ public class TodoService {
     public Todo updatePartialTodo(Long id, Map<String, Object> updates) {
         Optional<Todo> optionalTodo = repo.findById(id);
         if (optionalTodo.isEmpty()) {
-            return null;
+            throw new IllegalArgumentException("Todo not found");
         }
 
         Todo todo = optionalTodo.get();
@@ -86,6 +103,11 @@ public class TodoService {
         Optional<Todo> optionalTodo = repo.findById(id);
         if (optionalTodo.isPresent()) {
             Todo todo = optionalTodo.get();
+
+            if (todo.getIsArchived()) {
+                throw new IllegalStateException("Can't modify tasks that have been archived");
+            }
+
             todo.setIsArchived(true);
             return repo.save(todo);
         }
