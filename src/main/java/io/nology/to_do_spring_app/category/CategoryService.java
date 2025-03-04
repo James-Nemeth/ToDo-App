@@ -1,8 +1,8 @@
 package io.nology.to_do_spring_app.category;
 
 import org.springframework.stereotype.Service;
+
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -14,29 +14,42 @@ public class CategoryService {
     }
 
     public List<Category> getAllCategories() {
-        return repo.findAll();
+        List<Category> categories = repo.findAll();
+        if (categories.isEmpty()) {
+            throw new IllegalStateException("No categories found.");
+        }
+        return categories;
     }
 
     public Category getCategoryById(Long id) {
-        return repo.findById(id).orElse(null);
+        return repo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Category with ID " + id + " was not found."));
+
     }
 
     public Category createCategory(CreateCategoryDTO data) {
+        boolean duplicatedCategory = repo.existsCategoryByName(data.getName());
+        if (duplicatedCategory) {
+            throw new IllegalArgumentException("Category '" + data.getName() + "' already exists.");
+        }
+
         Category newCategory = new Category(data.getName());
         return repo.save(newCategory);
     }
 
     public Category updateCategory(Long id, CreateCategoryDTO data) {
-        Optional<Category> optionalCategory = repo.findById(id);
-        if (optionalCategory.isPresent()) {
-            Category category = optionalCategory.get();
-            category.setName(data.getName());
-            return repo.save(category);
-        }
-        return null;
+        Category category = repo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Category with ID " + id + " not found."));
+
+        category.setName(data.getName());
+        return repo.save(category);
     }
 
     public void deleteCategory(Long id) {
+        if (!repo.existsById(id)) {
+            throw new IllegalArgumentException("Category with ID " + id + " does not exist.");
+        }
+
         repo.deleteById(id);
     }
 }
