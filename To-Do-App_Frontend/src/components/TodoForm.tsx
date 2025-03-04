@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Category } from "../types/todo";
 import { getCategories } from "../services/categoryService";
 import CategorySelect from "./CategorySelect";
+import { addTodo } from "../services/todoService";
 
 const todoSchema = z.object({
   task: z.string().min(3, "Task must be at least 3 characters long."),
@@ -37,20 +38,18 @@ const TodoForm = ({ onAdd }: { onAdd: () => void }) => {
   }, []);
 
   const onSubmit = async (data: TodoFormValues) => {
-    await fetch("http://localhost:8080/todos", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    try {
+      await addTodo({
         task: data.task,
         categoryId: data.categoryId,
         isArchived: false,
-      }),
-    });
+      });
 
-    reset();
-    onAdd();
+      reset();
+      onAdd();
+    } catch (error) {
+      console.error("Error adding todo:", error);
+    }
   };
 
   return (

@@ -5,7 +5,10 @@ import { addCategory } from "../services/categoryService";
 import { useState } from "react";
 
 const categorySchema = z.object({
-  name: z.string().min(1, "Required"),
+  name: z
+    .string()
+    .min(1, "Required")
+    .regex(/[a-zA-Z]/, "Must contain at least one letter"),
 });
 
 type CategoryFormValues = z.infer<typeof categorySchema>;

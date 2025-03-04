@@ -8,7 +8,11 @@ export const getTodos = async () => {
   return response.data.filter((todo) => !todo.isArchived);
 };
 
-export const addTodo = async (todo: Omit<Todo, "id">) => {
+export const addTodo = async (todo: {
+  task: string;
+  categoryId: number;
+  isArchived: boolean;
+}) => {
   const response = await axios.post<Todo>(`${API_URL}/todos`, todo);
   return response.data;
 };
