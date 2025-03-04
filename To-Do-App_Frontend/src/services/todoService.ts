@@ -17,6 +17,14 @@ export const addTodo = async (todo: {
   return response.data;
 };
 
+export const editTodo = async (
+  id: number,
+  updatedTodo: { task: string; categoryId: number }
+) => {
+  const response = await axios.put<Todo>(`${API_URL}/todos/${id}`, updatedTodo);
+  return response.data;
+};
+
 export const updateTodo = async (id: number, updatedTodo: Partial<Todo>) => {
   const response = await axios.patch<Todo>(
     `${API_URL}/todos/${id}`,

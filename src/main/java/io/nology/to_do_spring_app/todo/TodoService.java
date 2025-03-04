@@ -39,6 +39,24 @@ public class TodoService {
         return repo.save(newTodo);
     }
 
+    public Todo updateTodo(Long id, UpdateTodoDTO data) {
+        Optional<Todo> optionalTodo = repo.findById(id);
+        if (optionalTodo.isEmpty()) {
+            throw new IllegalArgumentException("Todo not found");
+        }
+
+        Todo todo = optionalTodo.get();
+
+        Category category = categoryRepo.findById(data.getCategoryId())
+                .orElseThrow(() -> new IllegalArgumentException("Category not found"));
+
+        todo.setTask(data.getTask());
+        todo.setCompleted(data.getIsCompleted());
+        todo.setCategory(category);
+
+        return repo.save(todo);
+    }
+
     public Todo updatePartialTodo(Long id, Map<String, Object> updates) {
         Optional<Todo> optionalTodo = repo.findById(id);
         if (optionalTodo.isEmpty()) {

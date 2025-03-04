@@ -5,10 +5,12 @@ const TodoItem = ({
   todo,
   onUpdate,
   isCompletedTab,
+  onEdit,
 }: {
   todo: Todo;
   onUpdate: () => void;
   isCompletedTab: boolean;
+  onEdit: () => void;
 }) => {
   const setIsArchive = async () => {
     try {
@@ -36,11 +38,25 @@ const TodoItem = ({
       </div>
       <div>
         {isCompletedTab ? (
-          <div className="bg-green-500 text-white font-bold px-4 py-2 rounded-lg flex items-center justify-center w-10 h-10">
-            ✓
+          <div className="flex items-center gap-2">
+            <div className="bg-green-500 text-white font-bold px-4 py-2 rounded-lg flex items-center justify-center w-10 h-10">
+              ✓
+            </div>
+            <button
+              onClick={setIsArchive}
+              className="bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2 rounded-lg transition-all shadow-md"
+            >
+              Delete
+            </button>
           </div>
         ) : (
           <>
+            <button
+              onClick={onEdit}
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded-lg transition-all shadow-md mr-2"
+            >
+              Edit
+            </button>
             <button
               onClick={setIsComplete}
               className="bg-green-600 hover:bg-green-700 text-white font-bold px-4 py-2 rounded-lg transition-all shadow-md mr-2"

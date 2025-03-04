@@ -2,14 +2,15 @@ import { useEffect, useState } from "react";
 import TodoForm from "../components/TodoForm";
 import TodoList from "../components/TodoList";
 import { getCategories } from "../services/categoryService";
+import { Category } from "../types/todo";
 
 const Home = () => {
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   const fetchCategories = async () => {
     try {
       const data = await getCategories();
-      setCategories(data.map((category) => category.name));
+      setCategories(data);
     } catch (error) {
       console.error("Error fetching categories:", error);
     }

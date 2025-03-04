@@ -38,6 +38,16 @@ public class TodoController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateTodo(@PathVariable Long id, @RequestBody UpdateTodoDTO data) {
+        try {
+            Todo updatedTodo = service.updateTodo(id, data);
+            return ResponseEntity.ok(updatedTodo);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @PatchMapping("/{id}")
     public ResponseEntity<?> updatePartialTodo(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
         Todo updatedTodo = service.updatePartialTodo(id, updates);

@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
-import { Todo } from "../types/todo";
+import { Category, Todo } from "../types/todo";
 import { getTodos } from "../services/todoService";
 import TodoItem from "./TodoItem";
+import EditTodoModal from "./EditModal";
 
 const TodoList = ({
   categories,
   fetchCategories,
 }: {
-  categories: string[];
+  categories: Category[];
   fetchCategories: () => void;
 }) => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [activeTab, setActiveTab] = useState<"active" | "completed">("active");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [editingTodo, setEditingTodo] = useState<Todo | null>(null);
 
   const fetchTodos = async () => {
     try {
@@ -61,8 +63,8 @@ const TodoList = ({
         >
           <option value="all">All Categories</option>
           {categories.map((category) => (
-            <option key={category} value={category}>
-              {category}
+            <option key={category.id} value={category.name}>
+              {category.name}
             </option>
           ))}
         </select>
@@ -83,8 +85,21 @@ const TodoList = ({
             todo={todo}
             onUpdate={fetchTodos}
             isCompletedTab={activeTab === "completed"}
+            onEdit={() => setEditingTodo(todo)}
           />
         ))}
+
+      {editingTodo && (
+        <EditTodoModal
+          todo={editingTodo}
+          categories={categories}
+          onClose={() => setEditingTodo(null)}
+          onUpdate={() => {
+            fetchTodos();
+            setEditingTodo(null);
+          }}
+        />
+      )}
     </div>
   );
 };
