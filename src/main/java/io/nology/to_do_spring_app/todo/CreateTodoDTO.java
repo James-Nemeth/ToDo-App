@@ -14,6 +14,12 @@ public class CreateTodoDTO {
     @NotNull
     private Long categoryId;
 
+    public CreateTodoDTO(String task, Boolean completed, Long categoryId) {
+        this.task = task;
+        this.completed = completed;
+        this.categoryId = categoryId;
+    }
+
     public String getTask() {
         return task;
     }

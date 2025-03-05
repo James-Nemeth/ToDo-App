@@ -36,7 +36,7 @@ public class TodoService {
     }
 
     public Todo getTodoById(Long id) {
-        return repo.findById(id).orElseThrow(() -> new IllegalStateException("No Todos with this ID found"));
+        return repo.findById(id).orElse(null);
     }
 
     public Todo createTodo(CreateTodoDTO data) {

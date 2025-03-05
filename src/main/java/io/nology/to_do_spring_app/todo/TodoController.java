@@ -1,5 +1,6 @@
 package io.nology.to_do_spring_app.todo;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,9 +24,14 @@ public class TodoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Todo> getTodoById(@PathVariable Long id) {
+    public ResponseEntity<?> getTodoById(@PathVariable Long id) {
         Todo todo = service.getTodoById(id);
-        return todo != null ? ResponseEntity.ok(todo) : ResponseEntity.notFound().build();
+        if (todo != null) {
+            return ResponseEntity.ok(todo);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("No Todos with this ID found");
+        }
     }
 
     @PostMapping
@@ -34,7 +40,7 @@ public class TodoController {
             Todo createdTodo = service.createTodo(data);
             return ResponseEntity.ok(createdTodo);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
         }
     }
 
@@ -44,7 +50,7 @@ public class TodoController {
             Todo updatedTodo = service.updateTodo(id, data);
             return ResponseEntity.ok(updatedTodo);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
         }
     }
 
