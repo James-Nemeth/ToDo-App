@@ -22,10 +22,6 @@ public class TodoService {
     public List<Todo> getAllTodos() {
         List<Todo> todos = repo.findByIsArchivedFalse();
 
-        if (todos.isEmpty()) {
-            throw new IllegalStateException("No active todos found.");
-        }
-
         return todos;
     }
 
