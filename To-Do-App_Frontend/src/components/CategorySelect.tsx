@@ -1,6 +1,6 @@
 import { useState } from "react";
+import CategoryModal from "./CategoryModal";
 import { Category } from "../types/todo";
-import CategoryModal from "./CategroyModal";
 
 interface CategorySelectProps {
   categories: Category[];
@@ -46,6 +46,7 @@ const CategorySelect = ({
 
       {isModalOpen && (
         <CategoryModal
+          isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           onCategoryAdded={(newCategory) => {
             onCategoryAdded(newCategory);

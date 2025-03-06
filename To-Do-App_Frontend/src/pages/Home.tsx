@@ -1,24 +1,11 @@
-import { useEffect, useState } from "react";
 import TodoForm from "../components/TodoForm";
 import TodoList from "../components/TodoList";
-import { getCategories } from "../services/categoryService";
-import { Category } from "../types/todo";
+import { useCategory } from "../context/CategoryContext";
+import { useTodo } from "../context/TodoContext";
 
 const Home = () => {
-  const [categories, setCategories] = useState<Category[]>([]);
-
-  const fetchCategories = async () => {
-    try {
-      const data = await getCategories();
-      setCategories(data);
-    } catch (error) {
-      console.error("Error fetching categories:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchCategories();
-  }, []);
+  const { categories, fetchCategories } = useCategory();
+  const { todos, fetchTodos } = useTodo();
 
   return (
     <div className="max-w-5xl mx-auto mt-10 p-6 bg-[#1E1E2F] border border-gray-600 rounded-lg shadow-lg">
@@ -27,11 +14,15 @@ const Home = () => {
       </h1>
 
       <div className="mt-5">
-        <TodoForm onAdd={fetchCategories} />
+        <TodoForm onAdd={fetchTodos} />
       </div>
 
       <div className="mt-5">
-        <TodoList categories={categories} fetchCategories={fetchCategories} />
+        <TodoList
+          categories={categories}
+          fetchCategories={fetchCategories}
+          todos={todos}
+        />
       </div>
     </div>
   );

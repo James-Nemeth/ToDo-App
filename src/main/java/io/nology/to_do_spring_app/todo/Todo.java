@@ -22,7 +22,7 @@ public class Todo {
     private Boolean isArchived = false;
 
     @ManyToOne
-
+    @JoinColumn(name = "category_id")
     private Category category;
 
     public Todo() {

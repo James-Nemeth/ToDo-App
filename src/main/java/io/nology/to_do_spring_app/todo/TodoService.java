@@ -89,6 +89,16 @@ public class TodoService {
                 case "isArchived":
                     todo.setIsArchived((Boolean) value);
                     break;
+                case "category":
+
+                    if (value instanceof Map) {
+                        @SuppressWarnings("unchecked")
+                        Map<String, Object> categoryData = (Map<String, Object>) value;
+                        Long categoryId = ((Number) categoryData.get("id")).longValue();
+                        Optional<Category> category = categoryRepo.findById(categoryId);
+                        category.ifPresent(todo::setCategory);
+                    }
+                    break;
             }
         });
 

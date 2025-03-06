@@ -1,5 +1,5 @@
 import { Todo } from "../types/todo";
-import { archiveTodo, updateTodo } from "../services/todoService";
+import { useTodo } from "../context/TodoContext";
 
 const TodoItem = ({
   todo,
@@ -12,9 +12,11 @@ const TodoItem = ({
   isCompletedTab: boolean;
   onEdit: () => void;
 }) => {
+  const { archiveTodoItem, updateTodoStatus } = useTodo();
+
   const setIsArchive = async () => {
     try {
-      await archiveTodo(todo.id);
+      await archiveTodoItem(todo.id);
       onUpdate();
     } catch (error) {
       console.error("Error archiving todo:", error);
@@ -23,7 +25,7 @@ const TodoItem = ({
 
   const setIsComplete = async () => {
     try {
-      await updateTodo(todo.id, { completed: true });
+      await updateTodoStatus(todo.id, { completed: true });
       onUpdate();
     } catch (error) {
       console.error("Error updating todo:", error);

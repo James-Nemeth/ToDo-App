@@ -3,6 +3,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addCategory } from "../services/categoryService";
 import { useState } from "react";
+import Modal from "./common/Modal";
 
 const categorySchema = z.object({
   name: z
@@ -14,9 +15,11 @@ const categorySchema = z.object({
 type CategoryFormValues = z.infer<typeof categorySchema>;
 
 const CategoryModal = ({
+  isOpen,
   onClose,
   onCategoryAdded,
 }: {
+  isOpen: boolean;
   onClose: () => void;
   onCategoryAdded: (newCategory: { id: number; name: string }) => void;
 }) => {
@@ -46,40 +49,31 @@ const CategoryModal = ({
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-6 rounded shadow-lg w-96">
-        <h2 className="text-xl font-bold mb-4">Create New Category</h2>
-        <div className="flex flex-col gap-3">
-          <input
-            type="text"
-            placeholder="Category Name"
-            {...register("name")}
-            className="p-2 border rounded"
-          />
-          {errors.name && (
-            <p className="text-red-500 font-bold">{errors.name.message}</p>
-          )}
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <h2 className="text-xl font-bold mb-4">Create New Category</h2>
+      <div className="flex flex-col gap-3">
+        <input
+          type="text"
+          placeholder="Category Name"
+          {...register("name")}
+          className="p-2 border rounded"
+        />
+        {errors.name && (
+          <p className="text-red-500 font-bold">{errors.name.message}</p>
+        )}
 
-          <div className="flex justify-end gap-2">
-            <button
-              type="button"
-              onClick={onClose}
-              className="bg-gray-500 text-white p-2 rounded"
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              onClick={handleSubmit(onSubmit)}
-              className="bg-blue-500 text-white p-2 rounded"
-              disabled={loading}
-            >
-              {loading ? "Adding..." : "Add Category"}
-            </button>
-          </div>
+        <div className="flex justify-end gap-2">
+          <button
+            type="button"
+            onClick={handleSubmit(onSubmit)}
+            className="bg-blue-500 text-white p-2 rounded"
+            disabled={loading}
+          >
+            {loading ? "Adding..." : "Add Category"}
+          </button>
         </div>
       </div>
-    </div>
+    </Modal>
   );
 };
 

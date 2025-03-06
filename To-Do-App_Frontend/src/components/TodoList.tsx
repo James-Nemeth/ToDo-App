@@ -1,34 +1,33 @@
 import { useEffect, useState } from "react";
 import { Category, Todo } from "../types/todo";
-import { getTodos } from "../services/todoService";
 import TodoItem from "./TodoItem";
 import EditTodoModal from "./EditModal";
+import { useTodo } from "../context/TodoContext";
 
-const TodoList = ({
-  categories,
-  fetchCategories,
-}: {
+interface TodoListProps {
   categories: Category[];
   fetchCategories: () => void;
-}) => {
-  const [todos, setTodos] = useState<Todo[]>([]);
-  const [activeTab, setActiveTab] = useState<"active" | "completed">("active");
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const [editingTodo, setEditingTodo] = useState<Todo | null>(null);
+  todos: Todo[];
+}
 
-  const fetchTodos = async () => {
-    try {
-      const data = await getTodos();
-      setTodos(data);
-    } catch (error) {
-      console.error("Error fetching todos:", error);
-    }
-  };
+const TodoList: React.FC<TodoListProps> = ({
+  categories,
+  fetchCategories,
+  todos,
+}) => {
+  const {
+    activeTab,
+    selectedCategory,
+    fetchTodos,
+    setActiveTab,
+    setSelectedCategory,
+  } = useTodo();
+  const [editingTodo, setEditingTodo] = useState<Todo | null>(null);
 
   useEffect(() => {
     fetchTodos();
     fetchCategories();
-  }, [categories]);
+  }, [fetchCategories]);
 
   return (
     <div className="mt-5">
@@ -91,6 +90,7 @@ const TodoList = ({
 
       {editingTodo && (
         <EditTodoModal
+          isOpen={!!editingTodo}
           todo={editingTodo}
           categories={categories}
           onClose={() => setEditingTodo(null)}
