@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { addCategory } from "../services/categoryService";
 import { useState } from "react";
 import Modal from "./common/Modal";
+import { toast } from "react-toastify";
 
 const categorySchema = z.object({
   name: z
@@ -42,7 +43,7 @@ const CategoryModal = ({
       reset();
       onClose();
     } catch (error) {
-      console.error("Error adding category:", error);
+      toast.error("Failed to add category. Try again.");
     } finally {
       setLoading(false);
     }

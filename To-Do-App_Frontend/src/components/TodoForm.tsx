@@ -6,6 +6,7 @@ import { Category } from "../types/todo";
 import { getCategories } from "../services/categoryService";
 import CategorySelect from "./CategorySelect";
 import { addTodo } from "../services/todoService";
+import { toast } from "react-toastify";
 
 const todoSchema = z.object({
   task: z.string().min(3, "Task must be at least 3 characters long."),
@@ -48,7 +49,7 @@ const TodoForm = ({ onAdd }: { onAdd: () => void }) => {
       reset();
       onAdd();
     } catch (error) {
-      console.error("Error adding todo:", error);
+      toast.error("Failed to add the todo. Try again");
     }
   };
 

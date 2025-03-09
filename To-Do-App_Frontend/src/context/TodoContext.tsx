@@ -7,6 +7,7 @@ import {
   updateTodo,
   archiveTodo,
 } from "../services/todoService";
+import { toast } from "react-toastify";
 
 interface TodoContextType {
   todos: Todo[];
@@ -44,7 +45,7 @@ export const TodoProvider: React.FC<TodoProviderProps> = ({ children }) => {
       const data = await getTodos();
       setTodos(data);
     } catch (error) {
-      console.error("Error fetching todos:", error);
+      toast.error("Failed to get todos. Try again later");
     }
   };
 
@@ -57,7 +58,7 @@ export const TodoProvider: React.FC<TodoProviderProps> = ({ children }) => {
       await addTodo(todo);
       fetchTodos();
     } catch (error) {
-      console.error("Error adding todo:", error);
+      toast.error("Failed to add todo. Try again");
     }
   };
 
@@ -69,7 +70,7 @@ export const TodoProvider: React.FC<TodoProviderProps> = ({ children }) => {
       await editTodo(id, updatedTodo);
       fetchTodos();
     } catch (error) {
-      console.error("Error editing todo:", error);
+      toast.error("Failed to edit todo. Try again");
     }
   };
 
@@ -78,7 +79,7 @@ export const TodoProvider: React.FC<TodoProviderProps> = ({ children }) => {
       await updateTodo(id, updatedTodo);
       fetchTodos();
     } catch (error) {
-      console.error("Error updating todo status:", error);
+      toast.error("Failed to edit todo. Try again");
     }
   };
 
@@ -87,7 +88,7 @@ export const TodoProvider: React.FC<TodoProviderProps> = ({ children }) => {
       await archiveTodo(id);
       fetchTodos();
     } catch (error) {
-      console.error("Error archiving todo:", error);
+      toast.error("Failed to delete todo. Try again");
     }
   };
 

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { Category } from "../types/todo";
 import { getCategories, addCategory } from "../services/categoryService";
+import { toast } from "react-toastify";
 
 interface CategoryContextType {
   categories: Category[];
@@ -27,7 +28,7 @@ export const CategoryProvider: React.FC<CategoryProviderProps> = ({
         const data = await getCategories();
         setCategories(data);
       } catch (error) {
-        console.error("Error fetching categories:", error);
+        toast.error("Failed to get categories. Try again later");
       }
     }
   };
@@ -38,7 +39,7 @@ export const CategoryProvider: React.FC<CategoryProviderProps> = ({
       setCategories((prevCategories) => [...prevCategories, newCategory]);
       return newCategory;
     } catch (error) {
-      console.error("Error adding category:", error);
+      toast.error("Failed to add the category. Try again");
       throw error;
     }
   };

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useTodo } from "../context/TodoContext";
 import { Category, Todo } from "../types/todo";
 import Modal from "../components/common/Modal";
+import { toast } from "react-toastify";
 
 interface EditTodoModalProps {
   isOpen: boolean;
@@ -33,7 +34,7 @@ const EditTodoModal: React.FC<EditTodoModalProps> = ({
       onUpdate();
       onClose();
     } catch (error) {
-      console.error("Error updating todo:", error);
+      toast.error("Error updating the todo");
     }
   };
 

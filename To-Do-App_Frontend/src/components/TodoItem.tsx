@@ -1,5 +1,6 @@
 import { Todo } from "../types/todo";
 import { useTodo } from "../context/TodoContext";
+import { toast } from "react-toastify";
 
 const TodoItem = ({
   todo,
@@ -19,7 +20,7 @@ const TodoItem = ({
       await archiveTodoItem(todo.id);
       onUpdate();
     } catch (error) {
-      console.error("Error archiving todo:", error);
+      toast.error("Error deleting the todo. Try again");
     }
   };
 
@@ -28,7 +29,7 @@ const TodoItem = ({
       await updateTodoStatus(todo.id, { completed: true });
       onUpdate();
     } catch (error) {
-      console.error("Error updating todo:", error);
+      toast.error("Error updating the todo. Try again");
     }
   };
 

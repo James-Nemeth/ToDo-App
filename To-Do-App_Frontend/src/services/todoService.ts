@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Todo } from "../types/todo";
+import { toast } from "react-toastify";
 
 const API_URL = "http://localhost:8080";
 
@@ -37,7 +38,7 @@ export const archiveTodo = async (id: number) => {
   try {
     await axios.delete(`${API_URL}/todos/${id}`);
   } catch (error) {
-    console.error("Error deleting todo:", error);
+    toast.error("Failed to delete todo. Try again");
     throw error;
   }
 };
