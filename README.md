@@ -1,4 +1,4 @@
-[![Java Backend Tests](https://github.com/James-Nemeth/ToDo-App/actions/workflows/ci.yml/badge.svg)]
+![Java Backend Tests](https://github.com/James-Nemeth/ToDo-App/actions/workflows/ci.yml/badge.svg)
 
 # Todos API
 
