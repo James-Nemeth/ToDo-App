@@ -1,6 +1,7 @@
 import { Todo } from "../types/todo";
 import { useTodo } from "../context/TodoContext";
 import { toast } from "react-toastify";
+import { useTheme } from "../context/ThemeContext";
 
 const TodoItem = ({
   todo,
@@ -14,6 +15,7 @@ const TodoItem = ({
   onEdit: () => void;
 }) => {
   const { archiveTodoItem, updateTodoStatus } = useTodo();
+  const { theme } = useTheme();
 
   const setIsArchive = async () => {
     try {
@@ -34,10 +36,26 @@ const TodoItem = ({
   };
 
   return (
-    <div className="flex flex-col sm:flex-row justify-between items-center sm:items-center p-4 bg-[#1E1E2F] border border-gray-600 text-[#F8F8F8] rounded-lg shadow-md hover:shadow-lg transition-all my-3">
+    <div
+      className={`flex flex-col sm:flex-row justify-between items-center sm:items-center p-4 ${
+        theme === "dark" ? "bg-dark" : "bg-light"
+      } border border-gray-600 text-[#F8F8F8] rounded-lg shadow-md hover:shadow-lg transition-all my-3`}
+    >
       <div className="flex-1 text-center sm:text-left">
-        <h3 className="text-lg font-semibold text-[#F5A623]">{todo.task}</h3>
-        <p className="text-sm text-gray-300">{todo.category.name}</p>
+        <h3
+          className={`text-lg font-bold ${
+            theme === "dark" ? "text-light" : "text-dark"
+          }`}
+        >
+          {todo.task}
+        </h3>
+        <p
+          className={`text-sm ${
+            theme === "dark" ? "text-white" : "text-black"
+          }`}
+        >
+          {todo.category.name}
+        </p>
       </div>
       <div className="flex gap-2 mt-3 sm:mt-0">
         {isCompletedTab ? (
@@ -47,7 +65,9 @@ const TodoItem = ({
             </div>
             <button
               onClick={setIsArchive}
-              className="bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2 rounded-lg transition-all shadow-md"
+              className={`${
+                theme === "light" ? "text-black" : "text-white"
+              } bg-red-600 hover:bg-red-700 font-bold px-4 py-2 rounded-lg transition-all shadow-md`}
             >
               Delete
             </button>
@@ -56,19 +76,25 @@ const TodoItem = ({
           <>
             <button
               onClick={onEdit}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded-lg transition-all shadow-md"
+              className={`${
+                theme === "light" ? "text-black" : "text-white"
+              } bg-blue-600 hover:bg-blue-700 font-bold px-4 py-2 rounded-lg transition-all shadow-md`}
             >
               Edit
             </button>
             <button
               onClick={setIsComplete}
-              className="bg-green-600 hover:bg-green-700 text-white font-bold px-4 py-2 rounded-lg transition-all shadow-md"
+              className={`${
+                theme === "light" ? "text-black" : "text-white"
+              } bg-green-600 hover:bg-green-700 font-bold px-4 py-2 rounded-lg transition-all shadow-md`}
             >
               Complete
             </button>
             <button
               onClick={setIsArchive}
-              className="bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2 rounded-lg transition-all shadow-md"
+              className={`${
+                theme === "light" ? "text-black" : "text-white"
+              } bg-red-600 hover:bg-red-700 font-bold px-4 py-2 rounded-lg transition-all shadow-md`}
             >
               Delete
             </button>

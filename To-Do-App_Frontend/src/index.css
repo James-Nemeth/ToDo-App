@@ -2,8 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    background-color: #1A1A2E; 
+
+html.light {
+  background-color: #faf1bd; 
 }
 
+html.dark {
+  background-color: #1A1A2E; 
+}
+
+.text-light {
+  color: #F5A623; 
+}
+
+.text-dark {
+  color: #353a6e
+}
+
+.bg-light {
+  background-color: #ffffd8;
+}
+
+.bg-dark {
+  background-color: #1E1E2F;
+}
 

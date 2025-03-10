@@ -7,6 +7,7 @@ import { getCategories } from "../services/categoryService";
 import CategorySelect from "./CategorySelect";
 import { addTodo } from "../services/todoService";
 import { toast } from "react-toastify";
+import { useTheme } from "../context/ThemeContext";
 
 const todoSchema = z.object({
   task: z.string().min(3, "Task must be at least 3 characters long."),
@@ -22,6 +23,7 @@ type TodoFormValues = z.infer<typeof todoSchema>;
 
 const TodoForm = ({ onAdd }: { onAdd: () => void }) => {
   const [categories, setCategories] = useState<Category[]>([]);
+  const { theme } = useTheme();
 
   const {
     register,
@@ -83,7 +85,9 @@ const TodoForm = ({ onAdd }: { onAdd: () => void }) => {
 
       <button
         type="submit"
-        className="bg-blue-500 text-white p-2 rounded font-bold text-xl  hover:bg-blue-600"
+        className={`${
+          theme === "light" ? "text-black" : "text-white"
+        } bg-blue-500 p-2 rounded font-bold text-xl hover:bg-blue-600`}
       >
         Add Task
       </button>

@@ -2,14 +2,24 @@ import TodoForm from "../components/TodoForm";
 import TodoList from "../components/TodoList";
 import { useCategory } from "../context/CategoryContext";
 import { useTodo } from "../context/TodoContext";
+import { useTheme } from "../context/ThemeContext";
 
 const Home = () => {
   const { categories, fetchCategories } = useCategory();
   const { todos, fetchTodos } = useTodo();
+  const { theme } = useTheme();
 
   return (
-    <div className="max-w-5xl mx-auto mt-10 p-6 bg-[#1E1E2F] border border-gray-600 rounded-lg shadow-lg">
-      <h1 className="text-4xl font-bold text-center text-[#F5A623]">
+    <div
+      className={`max-w-5xl mx-auto mt-10 p-6 ${
+        theme === "dark" ? "bg-dark" : "bg-light"
+      } border border-gray-600 rounded-lg shadow-lg`}
+    >
+      <h1
+        className={`text-4xl font-bold text-center ${
+          theme === "dark" ? "text-light" : "text-dark"
+        }`}
+      >
         TaskFlow
       </h1>
 

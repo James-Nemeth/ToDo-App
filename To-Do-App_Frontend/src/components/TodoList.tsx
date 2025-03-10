@@ -3,6 +3,7 @@ import { Category, Todo } from "../types/todo";
 import TodoItem from "./TodoItem";
 import EditTodoModal from "./EditModal";
 import { useTodo } from "../context/TodoContext";
+import { useTheme } from "../context/ThemeContext";
 
 interface TodoListProps {
   categories: Category[];
@@ -23,6 +24,7 @@ const TodoList: React.FC<TodoListProps> = ({
     setSelectedCategory,
   } = useTodo();
   const [editingTodo, setEditingTodo] = useState<Todo | null>(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     fetchTodos();
@@ -30,12 +32,16 @@ const TodoList: React.FC<TodoListProps> = ({
   }, [fetchCategories]);
 
   return (
-    <div className="mt-5">
+    <div className={`mt-5 ${theme === "dark" ? "bg-dark" : "bg-light"}`}>
       <div className="flex gap-4 mb-4">
         <button
           className={`px-4 py-2 rounded-lg font-bold transition-all shadow-md ${
             activeTab === "active"
-              ? "bg-[#F5A623] text-[#1E1E2F] hover:bg-[#E5941C]"
+              ? theme === "light"
+                ? "bg-[#353a6e] text-white hover:bg-[#1e2d5f]"
+                : "bg-[#F5A623] text-[#1E1E2F] hover:bg-[#E5941C]"
+              : theme === "light"
+              ? "bg-gray-600 text-black hover:bg-gray-500"
               : "bg-gray-600 text-[#F8F8F8] hover:bg-gray-500"
           }`}
           onClick={() => setActiveTab("active")}
@@ -45,7 +51,11 @@ const TodoList: React.FC<TodoListProps> = ({
         <button
           className={`px-4 py-2 rounded-lg font-bold transition-all shadow-md ${
             activeTab === "completed"
-              ? "bg-[#F5A623] text-[#1E1E2F] hover:bg-[#E5941C]"
+              ? theme === "light"
+                ? "bg-[#353a6e] text-white hover:bg-[#1e2d5f]"
+                : "bg-[#F5A623] text-[#1E1E2F] hover:bg-[#E5941C]"
+              : theme === "light"
+              ? "bg-gray-600 text-black hover:bg-gray-500"
               : "bg-gray-600 text-[#F8F8F8] hover:bg-gray-500"
           }`}
           onClick={() => setActiveTab("completed")}
@@ -56,7 +66,11 @@ const TodoList: React.FC<TodoListProps> = ({
 
       <div className="mb-4">
         <select
-          className="px-4 py-2 border rounded-lg bg-[#1E1E2F] text-[#F8F8F8] shadow-md"
+          className={`px-4 py-2 border rounded-lg shadow-md ${
+            theme === "light"
+              ? "bg-white text-black border-gray"
+              : "bg-[#1E1E2F] text-[#F8F8F8] border-[#F8F8F8]"
+          }`}
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
         >
