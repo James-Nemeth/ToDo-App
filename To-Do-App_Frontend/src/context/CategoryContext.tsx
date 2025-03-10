@@ -23,13 +23,11 @@ export const CategoryProvider: React.FC<CategoryProviderProps> = ({
   const [categories, setCategories] = useState<Category[]>([]);
 
   const fetchCategories = async () => {
-    if (categories.length === 0) {
-      try {
-        const data = await getCategories();
-        setCategories(data);
-      } catch (error) {
-        toast.error("Failed to get categories. Try again later");
-      }
+    try {
+      const data = await getCategories();
+      setCategories(data);
+    } catch (error) {
+      toast.error("Failed to get categories. Try again later");
     }
   };
 

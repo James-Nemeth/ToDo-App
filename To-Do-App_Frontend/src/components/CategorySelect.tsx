@@ -1,21 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CategoryModal from "./CategoryModal";
-import { Category } from "../types/todo";
+import { useCategory } from "../context/CategoryContext";
 
 interface CategorySelectProps {
-  categories: Category[];
   selectedCategory: number | null;
   onCategoryChange: (id: number | null) => void;
-  onCategoryAdded: (newCategory: Category) => void;
 }
 
 const CategorySelect = ({
-  categories,
   selectedCategory,
   onCategoryChange,
-  onCategoryAdded,
 }: CategorySelectProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { categories, fetchCategories } = useCategory();
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   return (
     <>
@@ -48,10 +49,6 @@ const CategorySelect = ({
         <CategoryModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          onCategoryAdded={(newCategory) => {
-            onCategoryAdded(newCategory);
-            setIsModalOpen(false);
-          }}
         />
       )}
     </>

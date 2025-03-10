@@ -1,21 +1,16 @@
 import { useEffect, useState } from "react";
-import { Category, Todo } from "../types/todo";
+import { Todo } from "../types/todo";
 import TodoItem from "./TodoItem";
 import EditTodoModal from "./EditModal";
 import { useTodo } from "../context/TodoContext";
 import { useTheme } from "../context/ThemeContext";
+import { useCategory } from "../context/CategoryContext";
 
 interface TodoListProps {
-  categories: Category[];
-  fetchCategories: () => void;
   todos: Todo[];
 }
 
-const TodoList: React.FC<TodoListProps> = ({
-  categories,
-  fetchCategories,
-  todos,
-}) => {
+const TodoList: React.FC<TodoListProps> = ({ todos }) => {
   const {
     activeTab,
     selectedCategory,
@@ -25,11 +20,12 @@ const TodoList: React.FC<TodoListProps> = ({
   } = useTodo();
   const [editingTodo, setEditingTodo] = useState<Todo | null>(null);
   const { theme } = useTheme();
+  const { categories, fetchCategories } = useCategory();
 
   useEffect(() => {
     fetchTodos();
     fetchCategories();
-  }, [fetchCategories]);
+  }, []);
 
   return (
     <div className={`mt-5 ${theme === "dark" ? "bg-dark" : "bg-light"}`}>

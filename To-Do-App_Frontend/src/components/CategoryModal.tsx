@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { addCategory } from "../services/categoryService";
 import { useState } from "react";
 import Modal from "./common/Modal";
 import { toast } from "react-toastify";
+import { useCategory } from "../context/CategoryContext";
 
 const categorySchema = z.object({
   name: z
@@ -18,12 +18,11 @@ type CategoryFormValues = z.infer<typeof categorySchema>;
 const CategoryModal = ({
   isOpen,
   onClose,
-  onCategoryAdded,
 }: {
   isOpen: boolean;
   onClose: () => void;
-  onCategoryAdded: (newCategory: { id: number; name: string }) => void;
 }) => {
+  const { addNewCategory, fetchCategories } = useCategory();
   const {
     register,
     handleSubmit,
@@ -38,8 +37,8 @@ const CategoryModal = ({
   const onSubmit = async (data: CategoryFormValues) => {
     try {
       setLoading(true);
-      const newCategory = await addCategory({ name: data.name });
-      onCategoryAdded(newCategory);
+      await addNewCategory(data.name);
+      fetchCategories();
       reset();
       onClose();
     } catch (error) {
