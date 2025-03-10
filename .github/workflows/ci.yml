@@ -3,10 +3,10 @@ name: Java CI with Maven
 on:
   push:
     branches:
-      - main
+      - feature/Github-Workflow
   pull_request:
     branches:
-      - main
+      - feature/Github-Workflow
 
 jobs:
   build:
@@ -20,6 +20,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: "11"
+          distribution: "adoptopenjdk"
 
       - name: Cache Maven dependencies
         uses: actions/cache@v3
