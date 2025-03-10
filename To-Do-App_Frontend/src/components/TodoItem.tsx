@@ -50,7 +50,7 @@ const TodoItem = ({
           {todo.task}
         </h3>
         <p
-          className={`text-sm ${
+          className={`text-sm font-semibold ${
             theme === "dark" ? "text-white" : "text-black"
           }`}
         >

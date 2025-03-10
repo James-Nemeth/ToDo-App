@@ -7,6 +7,10 @@ public class CreateCategoryDTO {
     @NotBlank
     private String name;
 
+    public CreateCategoryDTO(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
