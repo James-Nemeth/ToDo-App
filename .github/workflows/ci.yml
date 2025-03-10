@@ -3,10 +3,10 @@ name: Java CI with Maven
 on:
   push:
     branches:
-      - feature/Github-Workflow
+      - main
   pull_request:
     branches:
-      - feature/Github-Workflow
+      - main
 
 jobs:
   build:
