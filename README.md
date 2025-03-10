@@ -1,4 +1,4 @@
-[![Java CI with Maven](https://github.com/James-Nemeth/ToDo-App/actions/workflows/ci.yml/badge.svg)](https://github.com/James-Nemeth/ToDo-App/actions/workflows/ci.yml)
+[![Java CI with Maven](https://github.com/James-Nemeth/ToDo-App/actions/workflows/ci.yml/badge.svg?event=workflow_run)](https://github.com/James-Nemeth/ToDo-App/actions/workflows/ci.yml)
 
 # Todos API
 
