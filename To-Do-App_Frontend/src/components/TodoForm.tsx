@@ -75,7 +75,7 @@ const TodoForm = ({ onAdd }: { onAdd: () => void }) => {
             setValue("categoryId", id);
           }
         }}
-        onCategoryAdded={(newCategory) =>
+        onCategoryAdded={(newCategory: Category) =>
           setCategories([...categories, newCategory])
         }
       />

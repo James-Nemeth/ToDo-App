@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Todo } from "../types/todo";
+import { Category, Todo } from "../types/todo";
 import TodoItem from "./TodoItem";
 import EditTodoModal from "./EditModal";
 import { useTodo } from "../context/TodoContext";
@@ -8,6 +8,8 @@ import { useCategory } from "../context/CategoryContext";
 
 interface TodoListProps {
   todos: Todo[];
+  categories: Category[];
+  fetchCategories: () => void;
 }
 
 const TodoList: React.FC<TodoListProps> = ({ todos }) => {

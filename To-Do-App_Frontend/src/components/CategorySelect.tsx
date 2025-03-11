@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import CategoryModal from "./CategoryModal";
 import { useCategory } from "../context/CategoryContext";
+import { Category } from "../types/todo";
 
 interface CategorySelectProps {
+  categories: Category[];
   selectedCategory: number | null;
   onCategoryChange: (id: number | null) => void;
+  onCategoryAdded?: (newCategory: Category) => void;
 }
 
 const CategorySelect = ({
