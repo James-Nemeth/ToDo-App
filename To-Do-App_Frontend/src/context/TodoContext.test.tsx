@@ -8,7 +8,7 @@ import {
   updateTodo,
   archiveTodo,
 } from "../services/todoService";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 vi.mock("../services/todoService", () => ({
   getTodos: vi.fn(),
