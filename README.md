@@ -1,4 +1,5 @@
-![Java Backend Tests](https://github.com/James-Nemeth/ToDo-App/actions/workflows/ci.yml/badge.svg)
+[![Spring/Java Backend Tests](https://github.com/James-Nemeth/ToDo-App/actions/workflows/ci-backend.yml/badge.svg)](https://github.com/James-Nemeth/ToDo-App/actions/workflows/ci-backend.yml)
+[![React/TS Frontend Tests](https://github.com/James-Nemeth/ToDo-App/actions/workflows/ci-frontend.yml/badge.svg)](https://github.com/James-Nemeth/ToDo-App/actions/workflows/ci-frontend.yml)
 
 # Todos API
 
