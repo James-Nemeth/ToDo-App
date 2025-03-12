@@ -21,14 +21,18 @@ jobs:
           node-version: "16"
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          cd To-Do-App_Frontend
+          npm install
 
       - name: Run frontend tests
-        run: npm run test -- --run --reporter=jest-junit
+        run: |
+          cd To-Do-App_Frontend
+          npm run test
 
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: frontend-test-results
-          path: ./test-results/
+          path: ./To-Do-App_Frontend/test-results/
