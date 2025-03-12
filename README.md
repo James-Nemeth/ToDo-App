@@ -1,4 +1,4 @@
-[![Spring/Java Backend Tests](https://github.com/James-Nemeth/ToDo-App/actions/workflows/ci-backend.yml/badge.svg)](https://github.com/James-Nemeth/ToDo-App/actions/workflows/ci-backend.yml)
+[![Spring/Java Backend Tests](https://github.com/James-Nemeth/ToDo-App/actions/workflows/ci-backend.yml/badge.svg)](https://github.com/James-Nemeth/ToDo-App/actions/workflows/ci-backend.yml) <br>
 [![React/TS Frontend Tests](https://github.com/James-Nemeth/ToDo-App/actions/workflows/ci-frontend.yml/badge.svg)](https://github.com/James-Nemeth/ToDo-App/actions/workflows/ci-frontend.yml)
 
 # Todos API
