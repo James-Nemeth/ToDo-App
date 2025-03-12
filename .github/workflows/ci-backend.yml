@@ -1,4 +1,4 @@
-name: Java Backend Tests
+name: Spring/Java Backend Tests
 
 on:
   push:
