@@ -20,6 +20,7 @@ const TodoItem = ({
   const setIsArchive = async () => {
     try {
       await archiveTodoItem(todo.id);
+      toast.success("Task Deleted");
       onUpdate();
     } catch (error) {
       toast.error("Error deleting the todo. Try again");
@@ -29,6 +30,7 @@ const TodoItem = ({
   const setIsComplete = async () => {
     try {
       await updateTodoStatus(todo.id, { completed: true });
+      toast.success("Task Completed 👍");
       onUpdate();
     } catch (error) {
       toast.error("Error updating the todo. Try again");
@@ -76,25 +78,19 @@ const TodoItem = ({
           <>
             <button
               onClick={onEdit}
-              className={`${
-                theme === "light" ? "text-black" : "text-white"
-              } bg-blue-600 hover:bg-blue-700 font-bold px-4 py-2 rounded-lg transition-all shadow-md`}
+              className={`bg-blue-600 hover:bg-blue-700 font-bold px-4 py-2 rounded-lg transition-all shadow-md text-white`}
             >
               Edit
             </button>
             <button
               onClick={setIsComplete}
-              className={`${
-                theme === "light" ? "text-black" : "text-white"
-              } bg-green-600 hover:bg-green-700 font-bold px-4 py-2 rounded-lg transition-all shadow-md`}
+              className={`bg-green-600 hover:bg-green-700 font-bold px-4 py-2 rounded-lg transition-all shadow-md text-white`}
             >
               Complete
             </button>
             <button
               onClick={setIsArchive}
-              className={`${
-                theme === "light" ? "text-black" : "text-white"
-              } bg-red-600 hover:bg-red-700 font-bold px-4 py-2 rounded-lg transition-all shadow-md`}
+              className={`bg-red-600 hover:bg-red-700 font-bold px-4 py-2 rounded-lg transition-all shadow-md text-white`}
             >
               Delete
             </button>

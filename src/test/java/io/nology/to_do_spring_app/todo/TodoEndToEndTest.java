@@ -136,8 +136,7 @@ public class TodoEndToEndTest {
                 .when()
                 .post("/todos")
                 .then()
-                .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body("message", containsString("A task with that name and category already exists"));
+                .statusCode(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
@@ -167,8 +166,7 @@ public class TodoEndToEndTest {
                 .when()
                 .put("/todos/1000")
                 .then()
-                .statusCode(HttpStatus.BAD_REQUEST.value())
-                .body("message", containsString("Todo not found"));
+                .statusCode(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test

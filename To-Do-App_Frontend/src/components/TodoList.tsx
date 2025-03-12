@@ -29,6 +29,16 @@ const TodoList: React.FC<TodoListProps> = ({ todos }) => {
     fetchCategories();
   }, []);
 
+  const sortedTodos = todos
+    .filter((todo) =>
+      activeTab === "active" ? !todo.completed : todo.completed
+    )
+    .filter(
+      (todo) =>
+        selectedCategory === "all" || todo.category.name === selectedCategory
+    )
+    .sort((a, b) => b.id - a.id); // Sort by ID in descending order
+
   return (
     <div className={`mt-5 ${theme === "dark" ? "bg-dark" : "bg-light"}`}>
       <div className="flex gap-4 mb-4">
@@ -81,24 +91,15 @@ const TodoList: React.FC<TodoListProps> = ({ todos }) => {
         </select>
       </div>
 
-      {todos
-        .filter((todo) =>
-          activeTab === "active" ? !todo.completed : todo.completed
-        )
-        .filter(
-          (todo) =>
-            selectedCategory === "all" ||
-            todo.category.name === selectedCategory
-        )
-        .map((todo) => (
-          <TodoItem
-            key={todo.id}
-            todo={todo}
-            onUpdate={fetchTodos}
-            isCompletedTab={activeTab === "completed"}
-            onEdit={() => setEditingTodo(todo)}
-          />
-        ))}
+      {sortedTodos.map((todo) => (
+        <TodoItem
+          key={todo.id}
+          todo={todo}
+          onUpdate={fetchTodos}
+          isCompletedTab={activeTab === "completed"}
+          onEdit={() => setEditingTodo(todo)}
+        />
+      ))}
 
       {editingTodo && (
         <EditTodoModal

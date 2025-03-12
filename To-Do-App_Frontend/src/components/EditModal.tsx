@@ -31,6 +31,7 @@ const EditTodoModal: React.FC<EditTodoModalProps> = ({
         categoryId,
       };
       await editExistingTodo(todo.id, updatedTodo);
+      toast.success("Task has been successful edited.");
       onUpdate();
       onClose();
     } catch (error) {
