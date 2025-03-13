@@ -1,0 +1,38 @@
+name: React/TS Frontend Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: |
+          cd To-Do-App_Frontend
+          npm install
+
+      - name: Run frontend tests
+        run: |
+          cd To-Do-App_Frontend
+          npm run test
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-test-results
+          path: ./To-Do-App_Frontend/test-results/
