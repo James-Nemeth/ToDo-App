@@ -20,7 +20,7 @@ const Home = () => {
 
   return (
     <div
-      className={`max-w-5xl mx-auto mt-10 p-6 ${
+      className={`max-w-5xl mx-auto mt-16 p-6 px-4 sm:px-6 lg:px-8 ${
         theme === "dark" ? "bg-dark" : "bg-light"
       } border border-gray-600 rounded-lg shadow-lg`}
     >

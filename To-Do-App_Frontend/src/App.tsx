@@ -16,19 +16,18 @@ const App: React.FC = () => {
     <ThemeProvider>
       <CategoryProvider>
         <TodoProvider>
-          <div className="relative">
-            <div className="absolute top-4 right-5 ">
-              <ThemeToggle />
-            </div>
-            <Router basename="/ToDo-App">
-              <Routes>
-                <Route path="/" element={<LandingPage />} />
-                <Route path="/question-one" element={<QuestionOne />} />
-                <Route path="/question-two" element={<QuestionTwo />} />
-                <Route path="/home" element={<Home />} />
-              </Routes>
-            </Router>
+          <div className="absolute top-4 right-5 z-100">
+            <ThemeToggle />
           </div>
+          <Router basename="/ToDo-App">
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/question-one" element={<QuestionOne />} />
+              <Route path="/question-two" element={<QuestionTwo />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/*" element={<LandingPage />} />
+            </Routes>
+          </Router>
           <ToastContainer position="top-left" autoClose={3000} />
         </TodoProvider>
       </CategoryProvider>
