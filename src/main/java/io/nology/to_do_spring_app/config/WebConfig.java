@@ -10,7 +10,7 @@ public class WebConfig implements WebMvcConfigurer {
         String[] allowedOrigins = {
                 "http://localhost:5173/",
                 "http://127.0.0.1:5173/",
-                "https://james-nemeth.github.io"
+                "https://james-nemeth.github.io/ToDo-App/"
         };
         registry.addMapping("/**")
                 .allowedOrigins(allowedOrigins)
