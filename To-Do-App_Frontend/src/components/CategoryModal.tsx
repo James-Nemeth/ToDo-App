@@ -27,7 +27,6 @@ const CategoryModal = ({
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<CategoryFormValues>({
     resolver: zodResolver(categorySchema),
   });
@@ -38,8 +37,8 @@ const CategoryModal = ({
     try {
       setLoading(true);
       await addNewCategory(data.name);
+      toast.success("New Category Added.");
       fetchCategories();
-      reset();
       onClose();
     } catch (error) {
       toast.error("Failed to add category. Try again.");

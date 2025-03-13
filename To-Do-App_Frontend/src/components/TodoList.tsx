@@ -37,7 +37,7 @@ const TodoList: React.FC<TodoListProps> = ({ todos }) => {
       (todo) =>
         selectedCategory === "all" || todo.category.name === selectedCategory
     )
-    .sort((a, b) => b.id - a.id); // Sort by ID in descending order
+    .sort((a, b) => b.id - a.id);
 
   return (
     <div className={`mt-5 ${theme === "dark" ? "bg-dark" : "bg-light"}`}>

@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Category } from "../types/todo";
 import { getCategories } from "../services/categoryService";
 import CategorySelect from "./CategorySelect";
-import { addTodo } from "../services/todoService";
 import { toast } from "react-toastify";
 
 const todoSchema = z.object({
@@ -20,7 +19,16 @@ const todoSchema = z.object({
 
 type TodoFormValues = z.infer<typeof todoSchema>;
 
-const TodoForm = ({ onAdd }: { onAdd: () => void }) => {
+interface TodoFormProps {
+  buttonText: string;
+  onSubmit: (data: {
+    task: string;
+    categoryId: number;
+    isArchived: boolean;
+  }) => void;
+}
+
+const TodoForm: React.FC<TodoFormProps> = ({ buttonText, onSubmit }) => {
   const [categories, setCategories] = useState<Category[]>([]);
 
   const {
@@ -30,6 +38,7 @@ const TodoForm = ({ onAdd }: { onAdd: () => void }) => {
     watch,
     formState: { errors },
     reset,
+    clearErrors,
   } = useForm<TodoFormValues>({
     resolver: zodResolver(todoSchema),
   });
@@ -38,23 +47,30 @@ const TodoForm = ({ onAdd }: { onAdd: () => void }) => {
     getCategories().then(setCategories);
   }, []);
 
-  const onSubmit = async (data: TodoFormValues) => {
+  const onSubmitForm = async (data: TodoFormValues) => {
     try {
-      await addTodo({
+      const todoData = {
         task: data.task,
         categoryId: data.categoryId,
         isArchived: false,
-      });
-      toast.success("New Task has been successful added.");
+      };
+      onSubmit(todoData);
+      toast.success("New Task has been successfully added.");
       reset();
-      onAdd();
     } catch (error) {
       toast.error("Failed to add the todo. Try again");
     }
   };
 
+  const handleCategoryChange = (id: number | null) => {
+    if (id !== null) {
+      setValue("categoryId", id);
+      clearErrors("categoryId");
+    }
+  };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
+    <form onSubmit={handleSubmit(onSubmitForm)} className="flex flex-col gap-3">
       <input
         type="text"
         placeholder="Add a new Task"
@@ -68,11 +84,7 @@ const TodoForm = ({ onAdd }: { onAdd: () => void }) => {
       <CategorySelect
         categories={categories}
         selectedCategory={watch("categoryId")}
-        onCategoryChange={(id) => {
-          if (id !== null) {
-            setValue("categoryId", id);
-          }
-        }}
+        onCategoryChange={handleCategoryChange}
         onCategoryAdded={(newCategory: Category) =>
           setCategories([...categories, newCategory])
         }
@@ -85,7 +97,7 @@ const TodoForm = ({ onAdd }: { onAdd: () => void }) => {
         type="submit"
         className={`bg-blue-500 p-2 rounded font-bold text-xl hover:bg-blue-600 text-white`}
       >
-        Add Task
+        {buttonText}
       </button>
     </form>
   );

@@ -6,8 +6,17 @@ import { useTheme } from "../context/ThemeContext";
 
 const Home = () => {
   const { categories, fetchCategories } = useCategory();
-  const { todos, fetchTodos } = useTodo();
+  const { todos, addNewTodo, fetchTodos } = useTodo();
   const { theme } = useTheme();
+
+  const handleAddTodo = (data: {
+    task: string;
+    categoryId: number;
+    isArchived: boolean;
+  }) => {
+    addNewTodo(data);
+    fetchTodos();
+  };
 
   return (
     <div
@@ -24,7 +33,7 @@ const Home = () => {
       </h1>
 
       <div className="mt-5">
-        <TodoForm onAdd={fetchTodos} />
+        <TodoForm buttonText="Add Task" onSubmit={handleAddTodo} />
       </div>
 
       <div className="mt-5">

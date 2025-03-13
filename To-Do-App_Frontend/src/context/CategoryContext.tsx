@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { Category } from "../types/todo";
 import { getCategories, addCategory } from "../services/categoryService";
 import { toast } from "react-toastify";
