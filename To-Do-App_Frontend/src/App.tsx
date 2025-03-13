@@ -20,7 +20,7 @@ const App: React.FC = () => {
             <div className="absolute top-4 right-5 ">
               <ThemeToggle />
             </div>
-            <Router>
+            <Router basename="ToDo-App">
               <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/question-one" element={<QuestionOne />} />
