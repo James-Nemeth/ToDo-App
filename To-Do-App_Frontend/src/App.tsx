@@ -16,11 +16,11 @@ const App: React.FC = () => {
     <ThemeProvider>
       <CategoryProvider>
         <TodoProvider>
-          <div className="p-5 relative">
+          <div className="relative">
             <div className="absolute top-4 right-5 ">
               <ThemeToggle />
             </div>
-            <Router basename="ToDo-App">
+            <Router basename="/ToDo-App">
               <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/question-one" element={<QuestionOne />} />
