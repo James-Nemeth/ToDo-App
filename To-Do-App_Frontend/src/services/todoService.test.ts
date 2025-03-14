@@ -38,7 +38,7 @@ describe("todoService", () => {
         completed: false,
       },
     ];
-    mock.onGet("http://13.236.184.230/todos").reply(200, mockTodos);
+    mock.onGet("http://3.26.14.209/todos").reply(200, mockTodos);
 
     const todos = await getTodos();
 
@@ -58,7 +58,7 @@ describe("todoService", () => {
       id: 3,
       category: { id: mockCategoryId, name: "Work" },
     };
-    mock.onPost("http://13.236.184.230/todos", newTodo).reply(201, mockTodo);
+    mock.onPost("http://3.26.14.209/todos", newTodo).reply(201, mockTodo);
 
     const todo = await addTodo(newTodo);
 
@@ -78,9 +78,7 @@ describe("todoService", () => {
       ...updatedTodo,
       category: { id: mockCategoryId, name: "Work" },
     };
-    mock
-      .onPut("http://13.236.184.230/todos/1", updatedTodo)
-      .reply(200, mockTodo);
+    mock.onPut("http://3.26.14.209/todos/1", updatedTodo).reply(200, mockTodo);
 
     const todo = await editTodo(1, updatedTodo);
 
@@ -97,7 +95,7 @@ describe("todoService", () => {
     };
     const mockTodo: Todo = { id: 1, ...updatedTodo };
     mock
-      .onPatch("http://13.236.184.230/todos/1", updatedTodo)
+      .onPatch("http://3.26.14.209/todos/1", updatedTodo)
       .reply(200, mockTodo);
 
     const todo = await updateTodo(1, updatedTodo);
@@ -106,7 +104,7 @@ describe("todoService", () => {
   });
 
   it("should archive a todo", async () => {
-    mock.onDelete("http://13.236.184.230/todos/1").reply(200);
+    mock.onDelete("http://3.26.14.209/todos/1").reply(200);
 
     await expect(archiveTodo(1)).resolves.not.toThrow();
   });

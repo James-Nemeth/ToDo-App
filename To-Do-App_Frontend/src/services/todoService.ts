@@ -2,7 +2,7 @@ import axios from "axios";
 import { Todo } from "../types/todo";
 import { toast } from "react-toastify";
 
-const API_URL = "http://13.236.184.230";
+const API_URL = "https://3.26.14.209";
 
 export const getTodos = async () => {
   const response = await axios.get<Todo[]>(`${API_URL}/todos`);
