@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Category } from "../types/todo";
 
-const API_URL = "http://3.26.14.209";
+const API_URL = "http://localhost:8080";
 
 export const getCategories = async () => {
   const response = await axios.get<Category[]>(`${API_URL}/categories`);
