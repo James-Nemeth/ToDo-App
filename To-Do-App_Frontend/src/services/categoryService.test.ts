@@ -16,7 +16,7 @@ describe("categoryService", () => {
       { id: 1, name: "Work" },
       { id: 2, name: "Personal" },
     ];
-    mock.onGet("http://localhost:8080/categories").reply(200, mockCategories);
+    mock.onGet("http://13.236.184.230/categories").reply(200, mockCategories);
 
     const categories = await getCategories();
 
@@ -27,7 +27,7 @@ describe("categoryService", () => {
     const newCategory: Omit<Category, "id"> = { name: "Health" };
     const mockCategory: Category = { ...newCategory, id: 3 };
     mock
-      .onPost("http://localhost:8080/categories", newCategory)
+      .onPost("http://13.236.184.230/categories", newCategory)
       .reply(201, mockCategory);
 
     const category = await addCategory(newCategory);
